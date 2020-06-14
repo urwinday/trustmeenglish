@@ -25,6 +25,12 @@ ext {
 	mapstructVersion = "1.4.0.Beta1"
 }
 
+compileJava {
+	options.compilerArgs = [
+			'-Amapstruct.defaultComponentModel=spring',
+	]
+}
+
 repositories {
 	mavenCentral()
 }

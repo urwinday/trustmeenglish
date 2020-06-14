@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @GetMapping("/hello/{id}")
     public UserDTO sayHello(@PathVariable Long id) {
         User user = userService.getUser(id);
-        return UserMapper.INSTANCE.toDTO(user);
+        return userMapper.toDTO(user);
     }
 
 }
