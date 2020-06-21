@@ -5,9 +5,10 @@ import com.trustmeenglish.core.mappers.CardMapper;
 import com.trustmeenglish.core.model.Card;
 import com.trustmeenglish.core.services.CardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +22,13 @@ public class CardController {
         Card card = cardService.getCard(id);
         return cardMapper.toDTO(card);
     }
+
+//    public ResponseEntity<?> saveCard(@RequestParam("file")MultipartFile file,
+//                                      @RequestBody CardDTO cardDTO) {
+//        Card card = cardMapper.toEntity(cardDTO, file);
+//        card = cardService.addCard(card);
+//        cardDTO = cardMapper.toDTO(card);
+//        return  new ResponseEntity<>(cardDTO, HttpStatus.CREATED);
+//    }
 
 }
