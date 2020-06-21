@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 public class CardController {
@@ -18,17 +20,19 @@ public class CardController {
     private final CardMapper cardMapper;
 
     @GetMapping("/cards/{id}")
-    public CardDTO getCardById(@PathVariable Long id) {
+    public ResponseEntity sayHello(@PathVariable Long id) throws IOException {
         Card card = cardService.getCard(id);
-        return cardMapper.toDTO(card);
+        CardDTO cardDTO = cardMapper.toDTO(card);
+        return new ResponseEntity(cardDTO, HttpStatus.OK);
     }
 
-//    public ResponseEntity<?> saveCard(@RequestParam("file")MultipartFile file,
-//                                      @RequestBody CardDTO cardDTO) {
-//        Card card = cardMapper.toEntity(cardDTO, file);
-//        card = cardService.addCard(card);
-//        cardDTO = cardMapper.toDTO(card);
-//        return  new ResponseEntity<>(cardDTO, HttpStatus.CREATED);
-//    }
+    @PostMapping("/cards")
+    public ResponseEntity<?> saveCard(@RequestParam("file")MultipartFile file,
+                                      @RequestBody CardDTO cardDTO) throws IOException {
+        Card card = cardMapper.toEntity(cardDTO);
+        card = cardService.addCard(card);
+        cardDTO = cardMapper.toDTO(card);
+        return  new ResponseEntity<>(cardDTO, HttpStatus.CREATED);
+    }
 
 }
